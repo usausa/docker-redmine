@@ -1,0 +1,8 @@
+# Redmine テーマ一覧（タブ区切り / # 始まりはコメント）
+#
+# Redmine 6.0 以降、テーマの配置先は themes/（public/themes/ ではない）。
+# master が最新系統。redmine6.0 / redmine5.1 タグは旧バージョン向け。
+#
+# name	repo	ref
+farend_basic	https://github.com/farend/redmine_theme_farend_basic.git	v2.1.0
+farend_fancy	https://github.com/farend/redmine_theme_farend_fancy.git	v1.1.0

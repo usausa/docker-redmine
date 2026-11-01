@@ -1,0 +1,23 @@
+/* プラグインのリンクのアイコンが文字に重なるのを直す（Redmine 6 以降への対応）。
+   古い作りのプラグインは背景画像だけを指定し、「繰り返さない」「左に余白を取る」は Redmine 本体の .icon に任せていた。
+   Redmine 6 以降は .icon が SVG アイコン用に変わりその指定が無くなったため、画像が文字の下に敷き詰められたり、
+   文字の頭に重なったりする。 */
+
+/* redmine_banner: バナーの「編集」「表示オフ」（アイコンは 12px） */
+a.icon.banner-icon-edit,
+a.icon.banner-icon-off {
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 18px;
+}
+
+/* redmine_issue_templates: 新しいチケットの「タイトルと詳細をクリア」、管理メニューの「グローバル チケットテンプレート」、
+   テンプレートの「一覧」「テンプレート一覧 / 編集」、グローバルテンプレートの「設定」（アイコンは 16px） */
+a.icon.icon-erase,
+a.icon.icon-global_issue_templates,
+a.icon.icon-template,
+a.issue_template.icon.plugins {
+  background-repeat: no-repeat;
+  background-position: 0 50%;
+  padding-left: 20px;
+}

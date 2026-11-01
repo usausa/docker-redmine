@@ -1,0 +1,37 @@
+# Redmine の設定ファイル
+#
+# 環境ごとの値は .env から環境変数で受け取る（compose.yaml が渡す）。このファイルに実際の値は書かない。
+# ここに無い項目は Redmine の既定値のまま。
+
+default:
+  # --- メール送信 ---
+  # SMTP_ADDRESS が空ならメールを送らない（:test）。値があれば SMTP で送る。
+  email_delivery:
+<% if ENV['SMTP_ADDRESS'].to_s.strip.empty? %>
+    delivery_method: :test
+<% else %>
+    delivery_method: :smtp
+    smtp_settings:
+      enable_starttls_auto: true
+      address: <%= ENV['SMTP_ADDRESS'].strip.to_json %>
+      port: <%= ENV.fetch('SMTP_PORT', '587').to_s.strip.to_i %>
+<% unless ENV['SMTP_DOMAIN'].to_s.strip.empty? %>
+      domain: <%= ENV['SMTP_DOMAIN'].strip.to_json %>
+<% end %>
+<% unless ENV['SMTP_USER'].to_s.strip.empty? %>
+      authentication: :plain
+      user_name: <%= ENV['SMTP_USER'].strip.to_json %>
+      password: <%= ENV['SMTP_PASSWORD'].to_s.to_json %>
+<% end %>
+<% end %>
+
+  # --- ガントの PNG 出力で使う日本語フォント（Dockerfile で入れる fonts-ipaexfont-gothic）---
+  minimagick_font_path: /usr/share/fonts/opentype/ipaexfont-gothic/ipaexg.ttf
+
+  # --- sudo モード（重要な操作の前にパスワードを再入力させる仕組み）を使わない ---
+  # 使う場合はこの行を消す。
+  sudo_mode: false
+
+production:
+
+development:

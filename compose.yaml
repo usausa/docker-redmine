@@ -1,0 +1,69 @@
+name: redmine
+
+services:
+  db:
+    image: postgres:17-bookworm
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: redmine
+      POSTGRES_USER: redmine
+      POSTGRES_PASSWORD: ${DB_PASSWORD:?DB_PASSWORD is required - see .env.example}
+      TZ: Asia/Tokyo
+    volumes:
+      - ./data/postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U redmine -d redmine"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
+
+  redmine:
+    build:
+      context: .
+      args:
+        REDMINE_VERSION: ${REDMINE_VERSION:?REDMINE_VERSION is required - see .env.example}
+    # 版ごとにタグを付ける。版を上げても前のイメージが残り、.env を戻すだけで前の版に戻せる
+    image: local/redmine:${REDMINE_VERSION:?}
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      REDMINE_DB_POSTGRES: db
+      REDMINE_DB_DATABASE: redmine
+      REDMINE_DB_USERNAME: redmine
+      REDMINE_DB_PASSWORD: ${DB_PASSWORD:?}
+      # 起動時にプラグインのマイグレーションを実行する
+      REDMINE_PLUGINS_MIGRATE: "1"
+      # 固定しないと、コンテナを作り直すたびに全員のログインが切れる
+      SECRET_KEY_BASE: ${SECRET_KEY_BASE:?SECRET_KEY_BASE is required - see .env.example}
+      TZ: Asia/Tokyo
+      # メール送信（config/configuration.yml が読む。SMTP_ADDRESS が空ならメールを送らない）
+      SMTP_ADDRESS: ${SMTP_ADDRESS:-}
+      SMTP_PORT: ${SMTP_PORT:-587}
+      SMTP_DOMAIN: ${SMTP_DOMAIN:-}
+      SMTP_USER: ${SMTP_USER:-}
+      SMTP_PASSWORD: ${SMTP_PASSWORD:-}
+      # 初期設定（setup/initial_setup.rb が読む）
+      SETUP_HOST_NAME: ${SETUP_HOST_NAME:-}
+      SETUP_PROTOCOL: ${SETUP_PROTOCOL:-http}
+      SETUP_MAIL_FROM: ${SETUP_MAIL_FROM:-}
+      SETUP_ADMIN_EMAIL: ${SETUP_ADMIN_EMAIL:-}
+    volumes:
+      - ./data/files:/usr/src/redmine/files
+      # 読み取り専用（:ro）にはしない。公式イメージの起動処理が config/ 配下の所有者を変えるため、
+      # 読み取り専用だと起動に失敗する
+      - ./config/configuration.yml:/usr/src/redmine/config/configuration.yml
+      # 初期設定のスクリプトとデータ
+      - ./setup:/usr/src/redmine/setup:ro
+    ports:
+      - "8080:3000"
+    healthcheck:
+      # 公式イメージには curl が無いため wget を使う
+      test: ["CMD-SHELL", "wget -q -O /dev/null http://localhost:3000/login || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      # 初回の起動はマイグレーションに時間がかかるため長めに取る
+      start_period: 180s

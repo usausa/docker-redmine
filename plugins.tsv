@@ -1,0 +1,26 @@
+# Redmine プラグイン一覧（タブ区切り / # 始まりはコメント）
+#
+# 1列目: プラグインのディレクトリ名。Redmine が期待する名称と一致させること。
+#        リポジトリ名と異なる場合がある（例: redmine-view-customize → view_customize）
+# 2列目: git リポジトリの URL
+# 3列目: 固定するリビジョン。必ずタグまたはコミットハッシュを指定する。
+#        master を指すとビルドの再現性が失われる。
+#
+# zip 配布のプラグイン（RedmineUP Checklists）はここではなく vendor/ に置く。
+#
+# name	repo	ref
+redmine_wiki_extensions	https://github.com/haru/redmine_wiki_extensions.git	1.3.0
+redmine_issue_templates	https://github.com/agileware-jp/redmine_issue_templates.git	v1.2.2
+# redmine_banner: タグ 0.3.5 は Redmine 7（Rails 8.1）で起動しないため、修正を含むコミットに固定する。
+#   新しいタグが出たら切り替える。管理画面の版の表示は 0.3.4 になる。
+redmine_banner	https://github.com/agileware-jp/redmine_banner.git	7e7bd23296494e3825f28048c535b15f10987714
+view_customize	https://github.com/onozaty/redmine-view-customize.git	v3.6.0
+redmine_local_avatars	https://github.com/ncoders/redmine_local_avatars.git	v1.1.1
+redmine_theme_changer	https://github.com/haru/redmine_theme_changer.git	0.7.1
+redmine_issue_assign_notice	https://github.com/onozaty/redmine_issue_assign_notice.git	v2.3.0
+redmine_xlsx_format_issue_exporter	https://github.com/two-pack/redmine_xlsx_format_issue_exporter.git	0.3.0
+# redmica_ui_extension: バーンダウン・添付ファイルのプレビュー・検索できる選択欄・Mermaid のマクロ。
+#   master は Redmine 本体の Mermaid 対応（7.0.2 には無い）が前提のため、タグ v0.6.0 を使う。
+redmica_ui_extension	https://github.com/redmica/redmica_ui_extension.git	v0.6.0
+# redmine_issues_panel: チケットをステータスごとの列に並べ、ドラッグでステータスを変える。
+redmine_issues_panel	https://github.com/redmica/redmine_issues_panel.git	v1.2.2

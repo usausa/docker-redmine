@@ -1,0 +1,71 @@
+# 初期設定（initial_setup.rb）で作るカスタムフィールド
+#
+# 業務に固有の選択肢は、このファイルではなく custom_fields.local.yml（Git 管理外）に書く。
+# 書き方は custom_fields.local.yml.example を参照。同じ名前の項目は custom_fields.local.yml の内容で上書きされる。
+#
+# project: プロジェクトのカスタムフィールド
+#   format  形式（string など。既定は string）
+# issue: チケットのカスタムフィールド（すべてのトラッカー・すべてのプロジェクトで使う）
+#   format      形式（既定は list）
+#   values      選択肢
+#   filter      フィルタとして使う（既定は false）
+#   searchable  検索の対象にする（既定は false）
+
+project:
+  # redmine_issue_assign_notice が通知先として読む。値（Webhook の URL）は各プロジェクトの設定で入れる
+  - name: Assign Notice URL
+    format: string
+
+issue:
+  - name: 検出時工程
+    filter: true
+    searchable: true
+    values: [基本設計, 概要設計, 詳細設計, 製造, 単体ﾃｽﾄ, 受入ﾃｽﾄ, 結合ﾃｽﾄ, 総合ﾃｽﾄ, 運用ﾃｽﾄ]
+
+  - name: 原因工程
+    values: [基本設計, 概要設計, 詳細設計, 製造, 単体ﾃｽﾄ, 受入ﾃｽﾄ, 結合ﾃｽﾄ, 総合ﾃｽﾄ, 運用ﾃｽﾄ]
+
+  - name: 検出時機能システム名
+    values: [Webアプリ, WebAPI, バッチ]
+
+  # 業務の機能名は custom_fields.local.yml で足す
+  - name: 検出時機能機能名
+    values: [共通]
+
+  - name: バグ区分
+    values: [バグ, APバグ以外, バグでない, 不明, その他]
+
+  - name: 原因区分
+    values:
+      - 要求仕様書ﾐｽ
+      - 設計漏れ
+      - 設計誤り
+      - 製造漏れ
+      - 製造ﾛｼﾞｯｸﾐｽ
+      - ﾌﾟﾛｸﾞﾗﾑ構造ﾐｽ
+      - 製造ﾃﾞｰﾀ定義ﾐｽ
+      - ﾃﾞｰﾀﾍﾞｰｽﾐｽ
+      - ﾌｧｲﾙﾐｽ
+      - 環境設定ﾐｽ
+      - 統合ﾐｽ
+      - ﾘﾘｰｽﾐｽ
+      - 運用ﾐｽ
+      - 操作ﾐｽ
+      - OS等SW障害
+      - HW障害
+      - 原因不明
+      - 仕様通り
+      - 仕変(ﾕｰｻﾞ)
+      - 仕変(内部)
+      - 仕様確認
+      - 改善要望
+      - クレーム
+      - 計画変更
+      - Ｑ＆Ａ
+      - その他
+
+  - name: 障害種別
+    values: [バグ（新規製造部）, バグ（改造部）, バグ（既存部）, ﾃﾞｸﾞﾚｰﾄﾞ（新規製造部）, ﾃﾞｸﾞﾚｰﾄﾞ（改造部）, その他]
+
+  - name: 検出手段
+    values: [レビュー, テスト, 実運用, その他]

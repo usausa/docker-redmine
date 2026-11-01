@@ -1,0 +1,45 @@
+tr.overdue{
+  font-weight: bold;
+  color: red;
+}
+
+tr.status-2 > td.done_ratio > table.progress-0 > tbody > tr > td {
+  border: 1px solid #ee1111;
+}
+
+tr.status-1 > td.status {
+  font-weight: bold;
+  color: #1199ff;
+}
+
+tr.status-3 {
+  background: #ffcccd;
+}
+
+tr.status-3 > td.status {
+  font-weight: bold;
+  color: #00aa30;
+}
+
+tr.status-4 > td.status {
+  font-weight: bold;
+  color: #ff0097;
+}
+
+tr.status-7 > td.status {
+  font-weight: bold;
+  color: #ee0044;
+}
+
+table.list.issues td.author,
+table.list.issues td.assigned_to,
+table.list.issues td.last_updated_by {
+  white-space: nowrap;
+  max-width: 8em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+tr.noupdate60.status-1, tr.noupdate60.status-2, tr.noupdate60.status-3 {
+  background: #FF4081;
+}

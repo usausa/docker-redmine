@@ -1,0 +1,15 @@
+# 業務に固有のカスタムフィールドの選択肢（例）
+#
+# このファイルを custom_fields.local.yml にコピーして書き換える。custom_fields.local.yml は Git 管理外。
+#   cp setup/custom_fields.local.yml.example setup/custom_fields.local.yml
+#
+# custom_fields.yml と同じ名前の項目は、ここに書いた内容で上書きされる（values は丸ごと置き換わる）。
+# 新しい名前の項目を書くと、その項目も作られる。
+# 初期設定はカスタムフィールドがまだ無いときだけ作るので、initial_setup.rb を実行する前に用意しておく。
+
+issue:
+  - name: 検出時機能機能名
+    values:
+      - 共通
+      - <機能名 1>
+      - <機能名 2>

@@ -1,0 +1,16 @@
+# 実値を含むため Git 管理外
+.env
+
+# DB と添付ファイル
+data/
+
+# ライセンス物の zip（別途保管し、版とセットで管理すること）
+vendor/*.zip
+!vendor/.gitkeep
+
+# 業務に固有のカスタムフィールドの選択肢
+setup/custom_fields.local.yml
+
+# バックアップの出力先とログ（cron の例で backup/backup.log に出す）
+backup/archive/
+backup/*.log
