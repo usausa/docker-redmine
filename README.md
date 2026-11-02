@@ -48,9 +48,9 @@ Redmine 7 を Docker / docker compose で構築・運用するための構成一
 
 ### 0️⃣ 前提
 
-- 🐧 Linux のサーバーに Docker Engine と Docker Compose v2（`docker compose` コマンド）があること
+- 🐧 Linux のサーバーに Docker Engine と Docker Compose v2 以降（`docker compose` コマンド）があること
 - 🧰 リポジトリの取得に `git` を使います（無い場合は、ファイル一式をサーバーへコピーしてもかまいません）
-- 🌐 ビルドのときに、GitHub・rubygems.org・Docker Hub へ接続できること
+- 🌐 ビルドのときに、GitHub・rubygems.org・Docker Hub・deb.debian.org へ接続できること（イメージは Debian ベースで、ビルドの中で Debian のパッケージを入れるため、サーバーの OS に関係なく deb.debian.org が必要です）
 - 🔌 8080 番ポートが空いていること
 
 ### 1️⃣ リポジトリを取得する
