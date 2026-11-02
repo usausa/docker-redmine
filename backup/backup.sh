@@ -13,6 +13,9 @@
 
 set -euo pipefail
 
+# バックアップには .env のパスワードや利用者の情報が入るため、実行したユーザーだけが読めるように作る
+umask 077
+
 cd "$(dirname "$0")/.."
 
 TS=$(date +%Y%m%d-%H%M%S)
